@@ -5,8 +5,10 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent } from "@/components/ui/card";
 import { toast } from "sonner";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export const Contact = () => {
+  const { t } = useLanguage();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -17,7 +19,7 @@ export const Contact = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     console.log("Form submitted:", formData);
-    toast.success("Mensaje enviado correctamente. Te contactaremos pronto.");
+    toast.success("Message sent successfully. We'll contact you soon.");
     setFormData({ name: "", email: "", company: "", message: "" });
   };
 
@@ -29,54 +31,58 @@ export const Contact = () => {
   };
 
   return (
-    <section className="py-32 bg-white">
-      <div className="max-w-7xl mx-auto px-6">
+    <section id="contact" className="py-32 relative">
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-purple-900/10 to-transparent"></div>
+      
+      <div className="max-w-7xl mx-auto px-6 relative">
         <div className="grid lg:grid-cols-2 gap-16 items-center">
           <div>
-            <h2 className="text-4xl md:text-6xl font-light text-slate-900 mb-8 tracking-tight leading-tight">
-              Comencemos tu
-              <span className="block font-medium">próximo proyecto</span>
+            <h2 className="text-4xl md:text-6xl font-bold text-foreground mb-8 leading-tight">
+              {t('contact.title')}
             </h2>
             
-            <p className="text-xl text-slate-600 mb-12 leading-relaxed">
-              Cada gran transformación comienza con una conversación. 
-              Cuéntanos tu visión y la haremos realidad.
+            <p className="text-xl text-muted-foreground mb-12 leading-relaxed">
+              {t('contact.subtitle')}
             </p>
             
             <div className="space-y-8">
               <div className="flex items-center space-x-4">
-                <div className="w-12 h-12 bg-slate-100 rounded-2xl flex items-center justify-center">
-                  <div className="w-6 h-6 bg-slate-700 rounded-lg"></div>
+                <div className="w-12 h-12 gradient-purple rounded-2xl flex items-center justify-center">
+                  <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
                 </div>
                 <div>
-                  <h3 className="font-medium text-slate-900">Respuesta en 24h</h3>
-                  <p className="text-slate-600">Te contactamos en menos de un día hábil</p>
+                  <h3 className="font-bold text-foreground">{t('contact.response')}</h3>
+                  <p className="text-muted-foreground">Quick response guaranteed</p>
                 </div>
               </div>
               
               <div className="flex items-center space-x-4">
-                <div className="w-12 h-12 bg-slate-100 rounded-2xl flex items-center justify-center">
-                  <div className="w-6 h-6 bg-slate-700 rounded-lg"></div>
+                <div className="w-12 h-12 gradient-purple rounded-2xl flex items-center justify-center">
+                  <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
                 </div>
                 <div>
-                  <h3 className="font-medium text-slate-900">Consulta gratuita</h3>
-                  <p className="text-slate-600">Primera sesión sin compromiso</p>
+                  <h3 className="font-bold text-foreground">{t('contact.consultation')}</h3>
+                  <p className="text-muted-foreground">No commitment required</p>
                 </div>
               </div>
             </div>
           </div>
           
-          <Card className="border-0 shadow-2xl bg-gradient-to-br from-white to-slate-50">
+          <Card className="bg-card/50 backdrop-blur-sm border-border/50 hover:border-purple-500/50 transition-all duration-500 shadow-2xl">
             <CardContent className="p-8">
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div>
                   <Input
                     name="name"
-                    placeholder="Tu nombre"
+                    placeholder={t('contact.form.name')}
                     value={formData.name}
                     onChange={handleChange}
                     required
-                    className="h-14 text-lg border-slate-200 focus:border-slate-400 rounded-xl"
+                    className="h-14 text-lg bg-secondary/50 border-border/50 focus:border-purple-500 rounded-xl"
                   />
                 </div>
                 
@@ -84,42 +90,42 @@ export const Contact = () => {
                   <Input
                     name="email"
                     type="email"
-                    placeholder="Correo electrónico"
+                    placeholder={t('contact.form.email')}
                     value={formData.email}
                     onChange={handleChange}
                     required
-                    className="h-14 text-lg border-slate-200 focus:border-slate-400 rounded-xl"
+                    className="h-14 text-lg bg-secondary/50 border-border/50 focus:border-purple-500 rounded-xl"
                   />
                 </div>
                 
                 <div>
                   <Input
                     name="company"
-                    placeholder="Empresa"
+                    placeholder={t('contact.form.company')}
                     value={formData.company}
                     onChange={handleChange}
-                    className="h-14 text-lg border-slate-200 focus:border-slate-400 rounded-xl"
+                    className="h-14 text-lg bg-secondary/50 border-border/50 focus:border-purple-500 rounded-xl"
                   />
                 </div>
                 
                 <div>
                   <Textarea
                     name="message"
-                    placeholder="Cuéntanos sobre tu proyecto..."
+                    placeholder={t('contact.form.message')}
                     value={formData.message}
                     onChange={handleChange}
                     required
                     rows={5}
-                    className="text-lg border-slate-200 focus:border-slate-400 rounded-xl resize-none"
+                    className="text-lg bg-secondary/50 border-border/50 focus:border-purple-500 rounded-xl resize-none"
                   />
                 </div>
                 
                 <Button 
                   type="submit" 
                   size="lg"
-                  className="w-full h-14 bg-slate-900 hover:bg-slate-800 text-white text-lg font-medium rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
+                  className="w-full h-14 gradient-purple hover:opacity-90 text-lg font-medium rounded-xl transition-all duration-300 transform hover:scale-105 animate-glow"
                 >
-                  Enviar mensaje
+                  {t('contact.form.submit')}
                 </Button>
               </form>
             </CardContent>
